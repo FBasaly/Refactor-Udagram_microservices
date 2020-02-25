@@ -9,6 +9,7 @@ spec:
   template:
     metadata:
       labels:
+        track: stable
         service: frontend
         api: external        
     spec:
@@ -27,3 +28,27 @@ spec:
             cpu: "500m"                
       restartPolicy: Always
 
+name: frontend-canary
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        track: canary
+        service: frontend
+        api: external        
+    spec:
+      containers:
+      - image: fbasaly/udacity-frontend:local
+        name: frontend
+        imagePullPolicy: Always          
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"                
+      restartPolicy: Always
